@@ -3,6 +3,7 @@ import cors from 'cors';
 
 import createPostRouter from "./postRoute/createPost";
 import userRouter from "./postRoute/getAllPost"
+import toggleLike from "./postRoute/likeRoute"
 
 const app: Application = express();
 
@@ -24,5 +25,7 @@ app.use("/api/posts", createPostRouter);
 
 // find all post ;
 app.use("/api/users", userRouter);
+
+app.use("/api/like", toggleLike);
 
 export default app;

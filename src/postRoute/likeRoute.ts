@@ -14,43 +14,47 @@ router.post("/toggle", async (req: Request, res: Response): Promise<any> => {
             });
         }
 
+        const numericPostId = Number(postId);
+
         const existingLike = await prisma.like.findUnique({
             where: {
                 postId_userId: {
-                    postId: Number(postId),
+                    postId: numericPostId,
                     userId,
                 },
             },
         });
 
-        if (existingLike) {
+        let liked = false;
 
+        if (existingLike) {
             await prisma.like.delete({
                 where: {
                     id: existingLike.id,
                 },
             });
-
-            return res.status(200).json({
-                success: true,
-                message: "Post unliked successfully!",
-                liked: false,
-            });
+            liked = false;
         } else {
-           
             await prisma.like.create({
                 data: {
-                    postId: Number(postId),
+                    postId: numericPostId,
                     userId,
                 },
             });
-
-            return res.status(200).json({
-                success: true,
-                message: "Post liked successfully!",
-                liked: true,
-            });
+            liked = true;
         }
+
+        // বর্তমান পোস্টের মোট লাইক সংখ্যা হিসাব করা
+        const likesCount = await prisma.like.count({
+            where: { postId: numericPostId },
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: liked ? "Post liked successfully!" : "Post unliked successfully!",
+            liked,
+            likesCount,
+        });
 
     } catch (error) {
         console.error("Error toggling like:", error);
