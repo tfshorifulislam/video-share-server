@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/create", async (req: Request, res: Response): Promise<any> => {
     try {
-        const { title, media, userId } = req.body;
+        const { title, media, userId, description } = req.body;
 
         if (!userId) {
             return res.status(400).json({
@@ -26,6 +26,7 @@ router.post("/create", async (req: Request, res: Response): Promise<any> => {
                 title: title || "",
                 media,
                 userId,
+                description: description || "",
             },
             include: {
                 user: {
