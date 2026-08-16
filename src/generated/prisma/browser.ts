@@ -47,3 +47,8 @@ export type Post = Prisma.PostModel
  * 
  */
 export type Like = Prisma.LikeModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel

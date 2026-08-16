@@ -19,6 +19,7 @@ model User {
   accounts      Account[]
   posts         Post[]
   likes         Like[]
+  comments      Comment[]
 
   @@unique([email])
   @@map("user")
@@ -73,16 +74,16 @@ model Verification {
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   description String?
   media       Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   likes       Like[]
-
+  comments    Comment[]
   @@index([userId])
   @@map("post")
 }
@@ -97,4 +98,18 @@ model Like {
 
   @@unique([postId, userId])
   @@map("like")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  postId    Int
+  userId    String
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@index([userId])
 }
