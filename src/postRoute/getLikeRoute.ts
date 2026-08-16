@@ -3,48 +3,57 @@ import { prisma } from "../lib/prisma";
 
 const router = Router();
 
-router.get("/status/:postId/:userId", async (req: Request, res: Response): Promise<any> => {
-    try {
-        const { postId, userId } = req.params;
+router.get(
+    "/status/:postId/:userId",
+    async (
+        req: Request<{ postId: string; userId: string }>,
+        res: Response
+    ): Promise<any> => {
+        try {
+            const { postId, userId } = req.params;
 
-        const numericPostId = Number(postId);
+            const numericPostId = Number(postId);
 
-        if (!Number.isInteger(numericPostId) || !userId) {
-            return res.status(400).json({
+            // Validate input
+            if (!Number.isInteger(numericPostId) || !userId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Valid postId and userId are required.",
+                });
+            }
+
+            // Get total likes + check current user's like
+            const [likesCount, existingLike] = await Promise.all([
+                prisma.like.count({
+                    where: {
+                        postId: numericPostId,
+                    },
+                }),
+
+                prisma.like.findUnique({
+                    where: {
+                        postId_userId: {
+                            postId: numericPostId,
+                            userId,
+                        },
+                    },
+                }),
+            ]);
+
+            return res.status(200).json({
+                success: true,
+                likesCount,
+                isLiked: Boolean(existingLike),
+            });
+        } catch (error) {
+            console.error("Error fetching like status:", error);
+
+            return res.status(500).json({
                 success: false,
-                message: "Valid postId and userId are required.",
+                message: "Failed to fetch like status.",
             });
         }
-
-        const [likesCount, existingLike] = await Promise.all([
-            prisma.like.count({
-                where: {
-                    postId: numericPostId,
-                },
-            }),
-
-            prisma.like.findUnique({
-                where: {
-                    postId_userId: {
-                        postId: numericPostId,
-                        userId,
-                    },
-                },
-            }),
-        ]);
-
-        return res.status(200).json({
-            success: true,
-            likesCount,
-            isLiked: Boolean(existingLike),
-        });
-
-    } catch (error) {
-        console.error("Error fetching like status:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Failed to fetch like status.",
-        });
     }
-});
+);
+
+export default router;

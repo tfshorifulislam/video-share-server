@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from "express";
 import cors from 'cors';
 
 import createPostRouter from "./postRoute/createPost";
-import userRouter from "./postRoute/getAllPost"
+import allPostRouter from "./postRoute/getAllPost"
 import toggleLike from "./postRoute/likeRoute"
 
 const app: Application = express();
@@ -24,7 +24,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/posts", createPostRouter);
 
 // find all post ;
-app.use("/api/users", userRouter);
+app.use("/api/users", allPostRouter);
 
 app.use("/api/like", toggleLike);
 
