@@ -95,6 +95,6 @@ model Like {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
-  @@unique([postId, userId]) // Ekjon user ekta post-e ektai like korte parbe
+  @@unique([postId, userId])
   @@map("like")
 }

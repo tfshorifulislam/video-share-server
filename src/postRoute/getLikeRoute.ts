@@ -3,9 +3,7 @@ import { prisma } from "../lib/prisma";
 
 const router = Router();
 
-router.get(
-    "/status/:postId/:userId",
-    async (
+router.get("/status/:postId/:userId",async (
         req: Request<{ postId: string; userId: string }>,
         res: Response
     ): Promise<any> => {
@@ -14,7 +12,6 @@ router.get(
 
             const numericPostId = Number(postId);
 
-            // Validate input
             if (!Number.isInteger(numericPostId) || !userId) {
                 return res.status(400).json({
                     success: false,
