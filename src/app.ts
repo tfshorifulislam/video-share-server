@@ -6,6 +6,7 @@ import allPostRouter from "./postRoute/getAllPost"
 import getAllLike from "./postRoute/getLikeRoute"
 import createCommentsRouter from "./postRoute/postComments";
 import getCommentRouter from "./postRoute/getComments"
+import likeRouter from "./postRoute/likeRoute"
 
 const app: Application = express();
 
@@ -28,6 +29,8 @@ app.use("/api/posts", createPostRouter);
 // find all post ;
 app.use("/api/users", allPostRouter);
 
+// like route ;
+app.use("/api/like", likeRouter);
 //get all like
 app.use("/api/like", getAllLike);
 

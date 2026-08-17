@@ -3,7 +3,9 @@ import { prisma } from "../lib/prisma";
 
 const router = Router();
 
-router.get("/status/:postId/:userId",async (
+router.get(
+    "/status/:postId/:userId",
+    async (
         req: Request<{ postId: string; userId: string }>,
         res: Response
     ): Promise<any> => {
@@ -19,14 +21,15 @@ router.get("/status/:postId/:userId",async (
                 });
             }
 
-            // Get total likes + check current user's like
             const [likesCount, existingLike] = await Promise.all([
+                // Total likes
                 prisma.like.count({
                     where: {
                         postId: numericPostId,
                     },
                 }),
 
+                // Current user's like
                 prisma.like.findUnique({
                     where: {
                         postId_userId: {

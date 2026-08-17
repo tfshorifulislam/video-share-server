@@ -3,15 +3,16 @@ import { prisma } from "../lib/prisma";
 
 const router = Router();
 
-router.post("/toggle", async (req: Request, res: Response): Promise<any> => {
+router.post(
+    "/toggle",
+    async (req: Request, res: Response): Promise<any> => {
         try {
             const { postId, userId } = req.body;
 
-            // Validate input
             if (!postId || !userId) {
                 return res.status(400).json({
                     success: false,
-                    message: "PostId and UserId are required.",
+                    message: "postId and userId are required.",
                 });
             }
 
@@ -20,11 +21,11 @@ router.post("/toggle", async (req: Request, res: Response): Promise<any> => {
             if (!Number.isInteger(numericPostId)) {
                 return res.status(400).json({
                     success: false,
-                    message: "Invalid postId.",
+                    message: "Valid postId is required.",
                 });
             }
 
-            // Check if user already liked this post
+            // Check whether the user already liked the post
             const existingLike = await prisma.like.findUnique({
                 where: {
                     postId_userId: {
@@ -34,7 +35,7 @@ router.post("/toggle", async (req: Request, res: Response): Promise<any> => {
                 },
             });
 
-            let liked: boolean;
+            let isLiked: boolean;
 
             if (existingLike) {
                 // Already liked → Unlike
@@ -44,7 +45,7 @@ router.post("/toggle", async (req: Request, res: Response): Promise<any> => {
                     },
                 });
 
-                liked = false;
+                isLiked = false;
             } else {
                 // Not liked → Like
                 await prisma.like.create({
@@ -54,10 +55,10 @@ router.post("/toggle", async (req: Request, res: Response): Promise<any> => {
                     },
                 });
 
-                liked = true;
+                isLiked = true;
             }
 
-            // Get updated like count
+            // Get updated total likes
             const likesCount = await prisma.like.count({
                 where: {
                     postId: numericPostId,
@@ -66,10 +67,10 @@ router.post("/toggle", async (req: Request, res: Response): Promise<any> => {
 
             return res.status(200).json({
                 success: true,
-                message: liked
-                    ? "Post liked successfully!"
-                    : "Post unliked successfully!",
-                liked,
+                message: isLiked
+                    ? "Post liked successfully."
+                    : "Post unliked successfully.",
+                isLiked,
                 likesCount,
             });
         } catch (error) {
@@ -77,7 +78,7 @@ router.post("/toggle", async (req: Request, res: Response): Promise<any> => {
 
             return res.status(500).json({
                 success: false,
-                message: "Internal server error while toggling like.",
+                message: "Failed to toggle like.",
             });
         }
     }
