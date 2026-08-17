@@ -38,7 +38,6 @@ router.post(
             let isLiked: boolean;
 
             if (existingLike) {
-                // Already liked → Unlike
                 await prisma.like.delete({
                     where: {
                         id: existingLike.id,

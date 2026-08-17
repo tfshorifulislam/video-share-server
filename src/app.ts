@@ -7,6 +7,7 @@ import getAllLike from "./postRoute/getLikeRoute"
 import createCommentsRouter from "./postRoute/postComments";
 import getCommentRouter from "./postRoute/getComments"
 import likeRouter from "./postRoute/likeRoute"
+import savePostRouter from "./postRoute/savePost"
 
 const app: Application = express();
 
@@ -39,5 +40,8 @@ app.use("/api/comments", createCommentsRouter);
 
 //get all comments;
 app.use("/api/comments", getCommentRouter);
+
+// saved post route
+app.use("/api/save", savePostRouter);
 
 export default app;
