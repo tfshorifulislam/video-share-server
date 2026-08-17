@@ -61,6 +61,69 @@ router.post(
 );
 
 
+// =====================================================
+// GET ACTIVE STORIES
+// =====================================================
+
+router.get(
+    "/",
+    async (req: Request, res: Response): Promise<any> => {
+        try {
+            const { userId } = req.query;
+
+            const now = new Date();
+
+            const stories = await prisma.story.findMany({
+                where: {
+                    expiresAt: {
+                        gt: now,
+                    },
+                },
+
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true,
+                        },
+                    },
+
+                    views: userId
+                        ? {
+                            where: {
+                                userId: String(userId),
+                            },
+
+                            select: {
+                                id: true,
+                            },
+                        }
+                        : false,
+                },
+
+                orderBy: {
+                    createdAt: "asc",
+                },
+            });
+
+            return res.json({
+                success: true,
+                stories,
+            });
+
+        } catch (error) {
+            console.error("GET STORIES ERROR:", error);
+
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch stories",
+            });
+        }
+    }
+);
+
+
 
 
 
