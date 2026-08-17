@@ -21,39 +21,71 @@ router.get(
                 });
             }
 
-            const comments = await prisma.comment.findMany({
-                where: {
-                    postId: numericPostId,
-                },
+            const comments =
+                await prisma.comment.findMany({
+                    where: {
+                        postId: numericPostId,
 
-                include: {
-                    user: {
-                        select: {
-                            id: true,
-                            name: true,
-                            email: true,
-                            image: true,
+                        // Only main comments
+                        parentId: null,
+                    },
+
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                            },
+                        },
+
+                        post: {
+                            select: {
+                                userId: true,
+                            },
+                        },
+
+                        // Get replies
+                        replies: {
+                            include: {
+                                user: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        email: true,
+                                        image: true,
+                                    },
+                                },
+
+                                post: {
+                                    select: {
+                                        userId: true,
+                                    },
+                                },
+                            },
+
+                            orderBy: {
+                                createdAt: "asc",
+                            },
                         },
                     },
 
-                    post: {
-                        select: {
-                            userId: true,
-                        },
+                    orderBy: {
+                        createdAt: "desc",
                     },
-                },
-
-                orderBy: {
-                    createdAt: "desc",
-                },
-            });
+                });
 
             return res.status(200).json({
                 success: true,
                 comments,
             });
+
         } catch (error) {
-            console.error("Error fetching comments:", error);
+            console.error(
+                "Error fetching comments:",
+                error
+            );
 
             return res.status(500).json({
                 success: false,

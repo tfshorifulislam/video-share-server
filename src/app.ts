@@ -52,4 +52,5 @@ app.use("/api/save", savedPostRouter);
 //get single post
 app.use("/api/posts", getSinglePostRouter);
 
+
 export default app;

@@ -108,13 +108,18 @@ model Comment {
   content   String
   postId    Int
   userId    String
+  parentId  Int?
   createdAt DateTime @default(now())
 
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies Comment[] @relation("CommentReplies")
+
   @@index([postId])
   @@index([userId])
+  @@index([parentId])
 }
 
 model SavedPost {
