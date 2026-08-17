@@ -4,7 +4,8 @@ import cors from 'cors';
 import createPostRouter from "./postRoute/createPost";
 import allPostRouter from "./postRoute/getAllPost"
 import getAllLike from "./postRoute/getLikeRoute"
-import commentRouter from "./postRoute/getComments"
+import createCommentsRouter from "./postRoute/postComments";
+import getCommentRouter from "./postRoute/getComments"
 
 const app: Application = express();
 
@@ -30,7 +31,10 @@ app.use("/api/users", allPostRouter);
 //get all like
 app.use("/api/like", getAllLike);
 
+// create a new comment;
+app.use("/api/comments", createCommentsRouter);
+
 //get all comments;
-app.use("/api/comments", commentRouter);
+app.use("/api/comments", getCommentRouter);
 
 export default app;
