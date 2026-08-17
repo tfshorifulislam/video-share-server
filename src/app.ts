@@ -9,6 +9,7 @@ import getCommentRouter from "./postRoute/getComments"
 import likeRouter from "./postRoute/likeRoute"
 import savePostRouter from "./postRoute/savePost"
 import savedPostRouter from "./postRoute/getSavedPost";
+import getSinglePostRouter from "./postRoute/getSinglePost";
 
 const app: Application = express();
 
@@ -47,5 +48,8 @@ app.use("/api/save", savePostRouter);
 
 //get save post
 app.use("/api/save", savedPostRouter);
+
+//get single post
+app.use("/api/posts", getSinglePostRouter);
 
 export default app;
