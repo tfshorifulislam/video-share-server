@@ -62,3 +62,13 @@ export type SavedPost = Prisma.SavedPostModel
  * 
  */
 export type CommentLike = Prisma.CommentLikeModel
+/**
+ * Model Story
+ * 
+ */
+export type Story = Prisma.StoryModel
+/**
+ * Model StoryView
+ * 
+ */
+export type StoryView = Prisma.StoryViewModel

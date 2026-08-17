@@ -11,6 +11,7 @@ import savePostRouter from "./postRoute/savePost"
 import savedPostRouter from "./postRoute/getSavedPost";
 import getSinglePostRouter from "./postRoute/getSinglePost";
 import commentLikeRouter from "./postRoute/commentLike";
+import getCommentLikeRouter from "./postRoute/getCommentsWithLikes";
 
 const app: Application = express();
 
@@ -55,5 +56,8 @@ app.use("/api/posts", getSinglePostRouter);
 
 //comment like route
 app.use("/api/comment-likes", commentLikeRouter);
+
+//Get comment like route
+app.use("/api/get-comment-likes", getCommentLikeRouter);
 
 export default app;
