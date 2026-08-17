@@ -4,59 +4,47 @@ import { prisma } from "../lib/prisma";
 const router = Router();
 
 // Get all saved posts of a user
-router.get("/user/:userId", async (
-    req: Request<{ userId: string }>,
-    res: Response
-): Promise<any> => {
-    try {
-        const { userId } = req.params;
+router.get(
+    "/status/:postId/:userId",
+    async (
+        req: Request<{ postId: string; userId: string }>,
+        res: Response
+    ): Promise<any> => {
+        try {
+            const { postId, userId } = req.params;
 
-        if (!userId) {
-            return res.status(400).json({
-                success: false,
-                message: "userId is required.",
-            });
-        }
+            const numericPostId = Number(postId);
 
-        const savedPosts = await prisma.savedPost.findMany({
-            where: {
-                userId,
-            },
+            if (!Number.isInteger(numericPostId) || !userId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Valid postId and userId are required.",
+                });
+            }
 
-            include: {
-                post: {
-                    include: {
-                        user: {
-                            select: {
-                                id: true,
-                                name: true,
-                                image: true,
-                            },
-                        },
+            const savedPost = await prisma.savedPost.findUnique({
+                where: {
+                    postId_userId: {
+                        postId: numericPostId,
+                        userId,
                     },
                 },
-            },
+            });
 
-            orderBy: {
-                createdAt: "desc",
-            },
-        });
+            return res.status(200).json({
+                success: true,
+                isSaved: Boolean(savedPost),
+            });
 
-        return res.status(200).json({
-            success: true,
-            posts: savedPosts.map(
-                (savedPost) => savedPost.post
-            ),
-        });
+        } catch (error) {
+            console.error("Error checking save status:", error);
 
-    } catch (error) {
-        console.error("Error fetching saved posts:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Failed to fetch saved posts.",
-        });
+            return res.status(500).json({
+                success: false,
+                message: "Failed to check save status.",
+            });
+        }
     }
-});
+);
 
 export default router;
