@@ -228,9 +228,9 @@ export type PostWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   userId?: Prisma.StringFilter<"Post"> | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  likes?: Prisma.LikeListRelationFilter
   comments?: Prisma.CommentListRelationFilter
+  likes?: Prisma.LikeListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   savedPosts?: Prisma.SavedPostListRelationFilter
 }
 
@@ -242,9 +242,9 @@ export type PostOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
-  likes?: Prisma.LikeOrderByRelationAggregateInput
   comments?: Prisma.CommentOrderByRelationAggregateInput
+  likes?: Prisma.LikeOrderByRelationAggregateInput
+  user?: Prisma.UserOrderByWithRelationInput
   savedPosts?: Prisma.SavedPostOrderByRelationAggregateInput
 }
 
@@ -259,9 +259,9 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Post"> | Date | string
   userId?: Prisma.StringFilter<"Post"> | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  likes?: Prisma.LikeListRelationFilter
   comments?: Prisma.CommentListRelationFilter
+  likes?: Prisma.LikeListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   savedPosts?: Prisma.SavedPostListRelationFilter
 }, "id">
 
@@ -299,9 +299,9 @@ export type PostCreateInput = {
   media: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPostsInput
-  likes?: Prisma.LikeCreateNestedManyWithoutPostInput
   comments?: Prisma.CommentCreateNestedManyWithoutPostInput
+  likes?: Prisma.LikeCreateNestedManyWithoutPostInput
+  user: Prisma.UserCreateNestedOneWithoutPostsInput
   savedPosts?: Prisma.SavedPostCreateNestedManyWithoutPostInput
 }
 
@@ -313,8 +313,8 @@ export type PostUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
-  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutPostInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput
   savedPosts?: Prisma.SavedPostUncheckedCreateNestedManyWithoutPostInput
 }
 
@@ -324,9 +324,9 @@ export type PostUpdateInput = {
   media?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
-  likes?: Prisma.LikeUpdateManyWithoutPostNestedInput
   comments?: Prisma.CommentUpdateManyWithoutPostNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutPostNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   savedPosts?: Prisma.SavedPostUpdateManyWithoutPostNestedInput
 }
 
@@ -338,8 +338,8 @@ export type PostUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutPostNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput
   savedPosts?: Prisma.SavedPostUncheckedUpdateManyWithoutPostNestedInput
 }
 
@@ -520,8 +520,8 @@ export type PostCreateWithoutUserInput = {
   media: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  likes?: Prisma.LikeCreateNestedManyWithoutPostInput
   comments?: Prisma.CommentCreateNestedManyWithoutPostInput
+  likes?: Prisma.LikeCreateNestedManyWithoutPostInput
   savedPosts?: Prisma.SavedPostCreateNestedManyWithoutPostInput
 }
 
@@ -532,8 +532,8 @@ export type PostUncheckedCreateWithoutUserInput = {
   media: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutPostInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput
   savedPosts?: Prisma.SavedPostUncheckedCreateNestedManyWithoutPostInput
 }
 
@@ -582,8 +582,8 @@ export type PostCreateWithoutLikesInput = {
   media: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPostsInput
   comments?: Prisma.CommentCreateNestedManyWithoutPostInput
+  user: Prisma.UserCreateNestedOneWithoutPostsInput
   savedPosts?: Prisma.SavedPostCreateNestedManyWithoutPostInput
 }
 
@@ -621,8 +621,8 @@ export type PostUpdateWithoutLikesInput = {
   media?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   comments?: Prisma.CommentUpdateManyWithoutPostNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   savedPosts?: Prisma.SavedPostUpdateManyWithoutPostNestedInput
 }
 
@@ -644,8 +644,8 @@ export type PostCreateWithoutCommentsInput = {
   media: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPostsInput
   likes?: Prisma.LikeCreateNestedManyWithoutPostInput
+  user: Prisma.UserCreateNestedOneWithoutPostsInput
   savedPosts?: Prisma.SavedPostCreateNestedManyWithoutPostInput
 }
 
@@ -683,8 +683,8 @@ export type PostUpdateWithoutCommentsInput = {
   media?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   likes?: Prisma.LikeUpdateManyWithoutPostNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
   savedPosts?: Prisma.SavedPostUpdateManyWithoutPostNestedInput
 }
 
@@ -706,9 +706,9 @@ export type PostCreateWithoutSavedPostsInput = {
   media: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPostsInput
-  likes?: Prisma.LikeCreateNestedManyWithoutPostInput
   comments?: Prisma.CommentCreateNestedManyWithoutPostInput
+  likes?: Prisma.LikeCreateNestedManyWithoutPostInput
+  user: Prisma.UserCreateNestedOneWithoutPostsInput
 }
 
 export type PostUncheckedCreateWithoutSavedPostsInput = {
@@ -719,8 +719,8 @@ export type PostUncheckedCreateWithoutSavedPostsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
-  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutPostInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutPostInput
 }
 
 export type PostCreateOrConnectWithoutSavedPostsInput = {
@@ -745,9 +745,9 @@ export type PostUpdateWithoutSavedPostsInput = {
   media?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
-  likes?: Prisma.LikeUpdateManyWithoutPostNestedInput
   comments?: Prisma.CommentUpdateManyWithoutPostNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutPostNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPostsNestedInput
 }
 
 export type PostUncheckedUpdateWithoutSavedPostsInput = {
@@ -758,8 +758,8 @@ export type PostUncheckedUpdateWithoutSavedPostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutPostNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput
 }
 
 export type PostCreateManyUserInput = {
@@ -777,8 +777,8 @@ export type PostUpdateWithoutUserInput = {
   media?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  likes?: Prisma.LikeUpdateManyWithoutPostNestedInput
   comments?: Prisma.CommentUpdateManyWithoutPostNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutPostNestedInput
   savedPosts?: Prisma.SavedPostUpdateManyWithoutPostNestedInput
 }
 
@@ -789,8 +789,8 @@ export type PostUncheckedUpdateWithoutUserInput = {
   media?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutPostNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutPostNestedInput
   savedPosts?: Prisma.SavedPostUncheckedUpdateManyWithoutPostNestedInput
 }
 
@@ -809,14 +809,14 @@ export type PostUncheckedUpdateManyWithoutUserInput = {
  */
 
 export type PostCountOutputType = {
-  likes: number
   comments: number
+  likes: number
   savedPosts: number
 }
 
 export type PostCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  likes?: boolean | PostCountOutputTypeCountLikesArgs
   comments?: boolean | PostCountOutputTypeCountCommentsArgs
+  likes?: boolean | PostCountOutputTypeCountLikesArgs
   savedPosts?: boolean | PostCountOutputTypeCountSavedPostsArgs
 }
 
@@ -833,15 +833,15 @@ export type PostCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * PostCountOutputType without action
  */
-export type PostCountOutputTypeCountLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LikeWhereInput
+export type PostCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CommentWhereInput
 }
 
 /**
  * PostCountOutputType without action
  */
-export type PostCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CommentWhereInput
+export type PostCountOutputTypeCountLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LikeWhereInput
 }
 
 /**
@@ -860,9 +860,9 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  likes?: boolean | Prisma.Post$likesArgs<ExtArgs>
   comments?: boolean | Prisma.Post$commentsArgs<ExtArgs>
+  likes?: boolean | Prisma.Post$likesArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   savedPosts?: boolean | Prisma.Post$savedPostsArgs<ExtArgs>
   _count?: boolean | Prisma.PostCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["post"]>
@@ -901,9 +901,9 @@ export type PostSelectScalar = {
 
 export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "media" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["post"]>
 export type PostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  likes?: boolean | Prisma.Post$likesArgs<ExtArgs>
   comments?: boolean | Prisma.Post$commentsArgs<ExtArgs>
+  likes?: boolean | Prisma.Post$likesArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   savedPosts?: boolean | Prisma.Post$savedPostsArgs<ExtArgs>
   _count?: boolean | Prisma.PostCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -917,9 +917,9 @@ export type PostIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Post"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
-    likes: Prisma.$LikePayload<ExtArgs>[]
     comments: Prisma.$CommentPayload<ExtArgs>[]
+    likes: Prisma.$LikePayload<ExtArgs>[]
+    user: Prisma.$UserPayload<ExtArgs>
     savedPosts: Prisma.$SavedPostPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1324,9 +1324,9 @@ readonly fields: PostFieldRefs;
  */
 export interface Prisma__PostClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  likes<T extends Prisma.Post$likesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$likesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   comments<T extends Prisma.Post$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  likes<T extends Prisma.Post$likesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$likesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   savedPosts<T extends Prisma.Post$savedPostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Post$savedPostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavedPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1765,30 +1765,6 @@ export type PostDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Post.likes
- */
-export type Post$likesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Like
-   */
-  select?: Prisma.LikeSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Like
-   */
-  omit?: Prisma.LikeOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LikeInclude<ExtArgs> | null
-  where?: Prisma.LikeWhereInput
-  orderBy?: Prisma.LikeOrderByWithRelationInput | Prisma.LikeOrderByWithRelationInput[]
-  cursor?: Prisma.LikeWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LikeScalarFieldEnum | Prisma.LikeScalarFieldEnum[]
-}
-
-/**
  * Post.comments
  */
 export type Post$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1810,6 +1786,30 @@ export type Post$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.CommentScalarFieldEnum | Prisma.CommentScalarFieldEnum[]
+}
+
+/**
+ * Post.likes
+ */
+export type Post$likesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Like
+   */
+  select?: Prisma.LikeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Like
+   */
+  omit?: Prisma.LikeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LikeInclude<ExtArgs> | null
+  where?: Prisma.LikeWhereInput
+  orderBy?: Prisma.LikeOrderByWithRelationInput | Prisma.LikeOrderByWithRelationInput[]
+  cursor?: Prisma.LikeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LikeScalarFieldEnum | Prisma.LikeScalarFieldEnum[]
 }
 
 /**
