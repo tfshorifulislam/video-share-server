@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 
@@ -14,10 +16,9 @@ import commentLikeRouter from "./postRoute/commentLike.js";
 import getCommentLikeRouter from "./postRoute/getCommentsWithLikes.js";
 
 const app: Application = express();
-
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: process.env.FRONTEND_URL,
         credentials: true,
     })
 );
