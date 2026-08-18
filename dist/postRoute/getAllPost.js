@@ -3,15 +3,7 @@ import { prisma } from "../lib/prisma.js";
 const router = Router();
 router.get("/get-all-posts", async (req, res) => {
     try {
-        const limit = Math.min(Number(req.query.limit) || 10, 50);
-        const cursor = req.query.cursor ? Number(req.query.cursor) : undefined;
         const posts = await prisma.post.findMany({
-            take: limit + 1,
-            skip: cursor ? 1 : 0,
-            cursor: cursor ? { id: cursor } : undefined,
-            orderBy: {
-                createdAt: "desc",
-            },
             select: {
                 id: true,
                 title: true,
@@ -25,26 +17,18 @@ router.get("/get-all-posts", async (req, res) => {
                         name: true,
                         email: true,
                         image: true,
-                        emailVerified: true,
+                        emailVerified: true
                     },
                 },
             },
+            orderBy: {
+                createdAt: "desc",
+            },
         });
-        let hasNextPage = false;
-        let nextCursor = null;
-        if (posts.length > limit) {
-            hasNextPage = true;
-            posts.pop();
-            nextCursor = posts[posts.length - 1].id;
-        }
         return res.status(200).json({
             success: true,
-            message: "Posts fetched successfully",
+            message: "All posts fetched successfully",
             data: posts,
-            pagination: {
-                nextCursor,
-                hasNextPage,
-            },
         });
     }
     catch (error) {

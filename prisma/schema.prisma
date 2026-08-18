@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  // output   = "../src/generated/prisma"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -18,11 +18,10 @@ model User {
   comments      Comment[]
   accounts      Account[]
   likes         Like[]
-  posts         Post[]
+  posts         Post[] 
   savedPosts    SavedPost[]
   sessions      Session[]
   commentLikes  CommentLike[]
-
 
   @@map("user")
 }
@@ -87,7 +86,6 @@ model Post {
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   savedPosts  SavedPost[]
 
-  @@index([createdAt(sort: Desc)])
   @@index([userId])
   @@map("post")
 }
@@ -136,14 +134,15 @@ model SavedPost {
   @@map("saved_post")
 }
 
+
 model CommentLike {
   id        Int      @id @default(autoincrement())
   commentId Int
   userId    String
   createdAt DateTime @default(now())
 
-  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([commentId, userId])
   @@index([commentId])
