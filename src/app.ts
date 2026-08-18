@@ -2,6 +2,15 @@ import "dotenv/config";
 
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+const app: Application = express();
+
+app.use(
+    cors({
+        origin: process.env.FRONTEND_URL,
+        credentials: true,
+    })
+);
+app.use(express.json());
 
 import createPostRouter from "./postRoute/createPost.js";
 import allPostRouter from "./postRoute/getAllPost.js";
@@ -15,15 +24,6 @@ import getSinglePostRouter from "./postRoute/getSinglePost.js";
 import commentLikeRouter from "./postRoute/commentLike.js";
 import getCommentLikeRouter from "./postRoute/getCommentsWithLikes.js";
 
-const app: Application = express();
-app.use(
-    cors({
-        origin: process.env.FRONTEND_URL,
-        credentials: true,
-    })
-);
-
-app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Server is running!");
