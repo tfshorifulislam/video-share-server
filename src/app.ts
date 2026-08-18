@@ -12,7 +12,6 @@ import savedPostRouter from "./postRoute/getSavedPost";
 import getSinglePostRouter from "./postRoute/getSinglePost";
 import commentLikeRouter from "./postRoute/commentLike";
 import getCommentLikeRouter from "./postRoute/getCommentsWithLikes";
-import storyRoutes from "./storyRoutes/storyCreate";
 
 const app: Application = express();
 

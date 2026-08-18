@@ -22,7 +22,7 @@ model User {
   savedPosts    SavedPost[]
   sessions      Session[]
   commentLikes  CommentLike[]
-  stories Story[]
+
 
   @@map("user")
 }
@@ -87,6 +87,7 @@ model Post {
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   savedPosts  SavedPost[]
 
+  @@index([createdAt(sort: Desc)])
   @@index([userId])
   @@map("post")
 }
@@ -135,52 +136,17 @@ model SavedPost {
   @@map("saved_post")
 }
 
-
 model CommentLike {
   id        Int      @id @default(autoincrement())
   commentId Int
   userId    String
   createdAt DateTime @default(now())
 
-  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([commentId, userId])
   @@index([commentId])
   @@index([userId])
   @@map("comment_like")
-}
-
-model Story {
-  id        Int      @id @default(autoincrement())
-
-  userId    String
-
-  mediaUrl  String
-  mediaType String
-
-  createdAt DateTime @default(now())
-  expiresAt DateTime
-
-  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  views     StoryView[]
-
-  @@index([userId])
-  @@index([expiresAt])
-}
-
-model StoryView {
-  id        Int      @id @default(autoincrement())
-
-  storyId   Int
-  userId    String
-
-  createdAt DateTime @default(now())
-
-  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
-
-  @@unique([storyId, userId])
-  @@index([storyId])
-  @@index([userId])
 }
