@@ -59,9 +59,7 @@ export const ModelName = {
   Like: 'Like',
   Comment: 'Comment',
   SavedPost: 'SavedPost',
-  CommentLike: 'CommentLike',
-  Story: 'Story',
-  StoryView: 'StoryView'
+  CommentLike: 'CommentLike'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -191,28 +189,6 @@ export const CommentLikeScalarFieldEnum = {
 } as const
 
 export type CommentLikeScalarFieldEnum = (typeof CommentLikeScalarFieldEnum)[keyof typeof CommentLikeScalarFieldEnum]
-
-
-export const StoryScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  mediaUrl: 'mediaUrl',
-  mediaType: 'mediaType',
-  createdAt: 'createdAt',
-  expiresAt: 'expiresAt'
-} as const
-
-export type StoryScalarFieldEnum = (typeof StoryScalarFieldEnum)[keyof typeof StoryScalarFieldEnum]
-
-
-export const StoryViewScalarFieldEnum = {
-  id: 'id',
-  storyId: 'storyId',
-  userId: 'userId',
-  createdAt: 'createdAt'
-} as const
-
-export type StoryViewScalarFieldEnum = (typeof StoryViewScalarFieldEnum)[keyof typeof StoryViewScalarFieldEnum]
 
 
 export const SortOrder = {

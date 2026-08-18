@@ -6,114 +6,62 @@ const router = Router();
 router.get(
     "/get-all-posts",
     async (req: Request, res: Response): Promise<any> => {
-
         try {
+            const limit = Math.min(Number(req.query.limit) || 10, 50);
+            const cursor = req.query.cursor ? Number(req.query.cursor) : undefined;
 
-            const page = Math.max(
-                Number(req.query.page) || 1,
-                1
-            );
-
-            const limit = Math.min(
-                Number(req.query.limit) || 10,
-                50
-            );
-
-            const skip = (page - 1) * limit;
-
-            const totalPosts = await prisma.post.count();
-
-            const posts =
-                await prisma.post.findMany({
-
-                    skip,
-
-                    take: limit,
-
-                    select: {
-
-                        id: true,
-
-                        title: true,
-
-                        description: true,
-
-                        media: true,
-
-                        createdAt: true,
-
-                        userId: true,
-
-                        user: {
-                            select: {
-                                id: true,
-                                name: true,
-                                email: true,
-                                image: true,
-                                emailVerified: true,
-                            },
+            const posts = await prisma.post.findMany({
+                take: limit + 1,
+                skip: cursor ? 1 : 0,
+                cursor: cursor ? { id: cursor } : undefined,
+                orderBy: {
+                    createdAt: "desc",
+                },
+                select: {
+                    id: true,
+                    title: true,
+                    description: true,
+                    media: true,
+                    createdAt: true,
+                    userId: true,
+                    user: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            image: true,
+                            emailVerified: true,
                         },
-
                     },
+                },
+            });
 
-                    orderBy: {
-                        createdAt: "desc",
-                    },
+            let hasNextPage = false;
+            let nextCursor: number | null = null;
 
-                });
-
-            const totalPages =
-                Math.ceil(
-                    totalPosts / limit
-                );
-
-            const hasNextPage =
-                page < totalPages;
-
+            if (posts.length > limit) {
+                hasNextPage = true;
+                posts.pop();
+                nextCursor = posts[posts.length - 1].id;
+            }
 
             return res.status(200).json({
-
                 success: true,
-
-                message:
-                    "Posts fetched successfully",
-
+                message: "Posts fetched successfully",
                 data: posts,
-
                 pagination: {
-
-                    page,
-
-                    limit,
-
-                    totalPosts,
-
-                    totalPages,
-
+                    nextCursor,
                     hasNextPage,
-
                 },
-
             });
 
         } catch (error) {
-
-            console.error(
-                "Error fetching posts:",
-                error
-            );
-
+            console.error("Error fetching posts:", error);
             return res.status(500).json({
-
                 success: false,
-
-                message:
-                    "Internal server error",
-
+                message: "Internal server error",
             });
-
         }
-
     }
 );
 
