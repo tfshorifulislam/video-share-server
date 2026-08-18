@@ -1,16 +1,6 @@
 import "dotenv/config";
-
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-const app: Application = express();
-
-app.use(
-    cors({
-        origin: process.env.FRONTEND_URL,
-        credentials: true,
-    })
-);
-app.use(express.json());
 
 import createPostRouter from "./postRoute/createPost.js";
 import allPostRouter from "./postRoute/getAllPost.js";
@@ -24,42 +14,31 @@ import getSinglePostRouter from "./postRoute/getSinglePost.js";
 import commentLikeRouter from "./postRoute/commentLike.js";
 import getCommentLikeRouter from "./postRoute/getCommentsWithLikes.js";
 
+const app: Application = express();
+
+app.use(
+    cors({
+        origin: "https://space-client-db8y.onrender.com",
+        credentials: true,
+    })
+);
+
+app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Server is running!");
 });
 
-// create new post
 app.use("/api/posts", createPostRouter);
-
-// find all posts
 app.use("/api/users", allPostRouter);
-
-// like route
 app.use("/api/like", likeRouter);
-
-// get all likes
 app.use("/api/like", getAllLike);
-
-// create a new comment
 app.use("/api/comments", createCommentsRouter);
-
-// get all comments
 app.use("/api/comments", getCommentRouter);
-
-// saved post route
 app.use("/api/save", savePostRouter);
-
-// get saved posts
 app.use("/api/save", savedPostRouter);
-
-// get single post
 app.use("/api/posts", getSinglePostRouter);
-
-// comment like route
 app.use("/api/comment-likes", commentLikeRouter);
-
-// get comment likes
 app.use("/api/get-comment-likes", getCommentLikeRouter);
 
 export default app;
