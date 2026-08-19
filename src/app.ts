@@ -18,7 +18,7 @@ const app: Application = express();
 
 app.use(
     cors({
-        origin: "https://space-client-db8y.onrender.com",
+        origin: process.env.FRONTEND_URL,
         credentials: true,
     })
 );
@@ -29,16 +29,37 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Server is running!");
 });
 
+//post create router;
 app.use("/api/posts", createPostRouter);
+
+// get all post router;
 app.use("/api/users", allPostRouter);
+
+//post like router;
 app.use("/api/like", likeRouter);
+
+//get all like at post router;
 app.use("/api/like", getAllLike);
+
+//create comments router;
 app.use("/api/comments", createCommentsRouter);
+
+//get commet router;
 app.use("/api/comments", getCommentRouter);
+
+// save post router;
 app.use("/api/save", savePostRouter);
+
+//get save post router ;
 app.use("/api/save", savedPostRouter);
+
+//dynamic post router ;
 app.use("/api/posts", getSinglePostRouter);
+
+//comment like router;
 app.use("/api/comment-likes", commentLikeRouter);
+
+// get comments like router ;
 app.use("/api/get-comment-likes", getCommentLikeRouter);
 
 export default app;
