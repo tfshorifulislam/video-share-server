@@ -14,12 +14,12 @@ router.post("/create", async (req: Request, res: Response): Promise<any> => {
             });
         }
 
-        if (!media || !Array.isArray(media) || media.length === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "At least one media file is required.",
-            });
-        }
+        // if (!media || !Array.isArray(media) || media.length === 0) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "At least one media file is required.",
+        //     });
+        // }
 
         const newPost = await prisma.post.create({
             data: {
