@@ -13,6 +13,7 @@ import savedPostRouter from "./postRoute/getSavedPost.js";
 import getSinglePostRouter from "./postRoute/getSinglePost.js";
 import commentLikeRouter from "./postRoute/commentLike.js";
 import getCommentLikeRouter from "./postRoute/getCommentsWithLikes.js";
+import profileRouter from "./postRoute/profile.route.js";
 
 const app: Application = express();
 
@@ -61,5 +62,8 @@ app.use("/api/comment-likes", commentLikeRouter);
 
 // get comments like router ;
 app.use("/api/get-comment-likes", getCommentLikeRouter);
+
+// all profile route here;
+app.use("/api/profile", profileRouter);
 
 export default app;

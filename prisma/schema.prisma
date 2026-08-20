@@ -18,10 +18,13 @@ model User {
   comments      Comment[]
   accounts      Account[]
   likes         Like[]
-  posts         Post[] 
+  posts         Post[]
   savedPosts    SavedPost[]
   sessions      Session[]
   commentLikes  CommentLike[]
+
+  followers Follow[] @relation("Following")
+  following Follow[] @relation("Follower")
 
   @@map("user")
 }
@@ -134,18 +137,28 @@ model SavedPost {
   @@map("saved_post")
 }
 
-
 model CommentLike {
   id        Int      @id @default(autoincrement())
   commentId Int
   userId    String
   createdAt DateTime @default(now())
 
-  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([commentId, userId])
   @@index([commentId])
   @@index([userId])
   @@map("comment_like")
+}
+
+model Follow {
+  id          String @id @default(uuid())
+  followerId  String
+  followingId String
+
+  follower  User @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
 }
